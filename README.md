@@ -37,21 +37,55 @@ ma-prj-proposal-manager/
 └── README.md
 ```
 
-## Agent Roster
+## Default Agent Roster
 
-Default agents (config/agents.yaml):
+7 agents cover the full ai-superpower state machine (was 5 — see the migration
+note in [CHANGELOG.md](CHANGELOG.md) if upgrading from v0.x):
 
 | ID | Role | Scope (stages) | Color |
 |---|---|---|---|
-| coordinator | 协调员 | intake, clarifying | blue |
-| pm | 提案经理 | prd_pending_confirmation | purple |
-| dev | 开发 | in_dev | green |
-| test | 测试 | in_test_acceptance, test_failed | amber |
-| boss | 决策者 | accepted, deployed, delivered | red |
+| `market_research` | 市场研究 | research_direction_pending, research | 🔵 cyan |
+| `coordinator` | 协调员 | intake | 🔵 blue |
+| `designer` | 设计师 | ideation (before PRD) | 🟠 orange |
+| `pm` | 提案经理 | clarifying, prd_pending_confirmation | 🟣 purple |
+| `dev` | 开发 | in_tdd_test, in_dev | 🟢 green |
+| `test` | 测试 | in_test_acceptance, test_failed | 🟠 amber |
+| `boss` | 决策者 | accepted, needs_revision, deployed, delivered | 🔴 red |
 
 Edit `public/config/agents.yaml` to customize, or override in browser DevTools:
 ```js
 localStorage.setItem('ma_agent_roster', JSON.stringify([...]))
+```
+
+### Why market_research and designer?
+
+The ai-superpower state machine already includes `research_direction_pending`,
+`research`, and `ideation` as legitimate stages (see `models.py` STATUS_TRANSITIONS).
+The original prj-proposals-manager skill didn't surface them, but they map
+naturally to "before-PMD" workflow:
+
+```
+research_direction_pending (🔍 market_research)
+  ↓ output: research note
+intake (🧭 coordinator)
+  ↓ user intent captured
+ideation (💡 designer) ← optional design brainstorm
+  ↓ design concept
+clarifying (📋 pm)
+  ↓ Q&A rounds
+prd_pending_confirmation (📋 pm)
+  ↓ boss approves PRD
+approved_for_dev (📋 pm)
+  ↓ dev starts
+in_tdd_test (🛠️ dev)
+  ↓ TDD cases pass
+in_dev (🛠️ dev)
+  ↓ PR ready
+in_test_acceptance (🧪 test)
+  ↓ all pass
+accepted (👑 boss)
+  ↓ deployed
+delivered (👑 boss)
 ```
 
 ## Setup

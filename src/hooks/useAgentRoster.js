@@ -17,24 +17,38 @@ const STORAGE_KEY = 'ma_agent_roster';
 
 const DEFAULT_ROSTER = [
   {
+    id: 'market_research', name: 'Research', role: 'market_research',
+    icon: '🔍', color: '#06b6d4',
+    description: 'Market research, competitor analysis, feasibility study',
+    scope: ['research_direction_pending', 'research'],
+    initials: 'MR',
+  },
+  {
     id: 'coordinator', name: 'Coordinator', role: 'coordinator',
     icon: '🧭', color: '#3b82f6',
     description: 'Receives user requests, drafts proposals, coordinates the workflow',
-    scope: ['intake', 'clarifying'],
+    scope: ['intake'],
     initials: 'C',
+  },
+  {
+    id: 'designer', name: 'Designer', role: 'designer',
+    icon: '💡', color: '#f97316',
+    description: 'Brainstorming + solution design (ideation phase, before PRD)',
+    scope: ['ideation'],
+    initials: 'Ds',
   },
   {
     id: 'pm', name: 'PM', role: 'pm',
     icon: '📋', color: '#8b5cf6',
     description: 'Generates PRD + technical expectations',
-    scope: ['prd_pending_confirmation'],
+    scope: ['clarifying', 'prd_pending_confirmation'],
     initials: 'P',
   },
   {
     id: 'dev', name: 'Dev', role: 'dev',
     icon: '🛠️', color: '#10b981',
     description: 'Implements features, writes code, opens PRs',
-    scope: ['in_dev'],
+    scope: ['in_tdd_test', 'in_dev'],
     initials: 'D',
   },
   {
@@ -48,7 +62,7 @@ const DEFAULT_ROSTER = [
     id: 'boss', name: 'Boss', role: 'boss',
     icon: '👑', color: '#ef4444',
     description: 'Decision maker, final acceptance',
-    scope: ['accepted', 'deployed', 'delivered'],
+    scope: ['accepted', 'needs_revision', 'deployed', 'delivered'],
     initials: 'B',
   },
 ];

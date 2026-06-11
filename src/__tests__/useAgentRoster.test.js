@@ -38,6 +38,41 @@ describe('useAgentRoster', () => {
     expect(agent.role).toBe('dev');
   });
 
+  it('agentForStage routes research_direction_pending to market_research', async () => {
+    global.fetch.mockRejectedValue(new Error('network'));
+    const { result } = renderHook(() => useAgentRoster());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    const agent = result.current.agentForStage('research_direction_pending');
+    expect(agent).not.toBeNull();
+    expect(agent.role).toBe('market_research');
+  });
+
+  it('agentForStage routes ideation to designer', async () => {
+    global.fetch.mockRejectedValue(new Error('network'));
+    const { result } = renderHook(() => useAgentRoster());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    const agent = result.current.agentForStage('ideation');
+    expect(agent).not.toBeNull();
+    expect(agent.role).toBe('designer');
+  });
+
+  it('default roster has 7 agents covering all proposal stages', async () => {
+    global.fetch.mockRejectedValue(new Error('network'));
+    const { result } = renderHook(() => useAgentRoster());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.roster).toHaveLength(7);
+    const coveredStages = new Set();
+    result.current.roster.forEach(a => (a.scope || []).forEach(s => coveredStages.add(s)));
+    // Verify each main stage has an owner
+    for (const stage of [
+      'research_direction_pending', 'intake', 'ideation', 'clarifying',
+      'prd_pending_confirmation', 'in_dev', 'in_test_acceptance',
+      'accepted', 'delivered',
+    ]) {
+      expect(coveredStages.has(stage)).toBe(true);
+    }
+  });
+
   it('agentById returns the matching agent', async () => {
     global.fetch.mockRejectedValue(new Error('network'));
     const { result } = renderHook(() => useAgentRoster());

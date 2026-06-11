@@ -17,14 +17,32 @@
 # and uses any `agent:` block keys. If that also fails, the
 # default roster below is used.
 
+- id: market_research
+  name: 小 Research
+  role: market_research
+  icon: 🔍
+  color: "#06b6d4"
+  description: 市场调研 + 竞品分析 + 可行性研究，输出到 research_direction_pending
+  scope: [research_direction_pending, research]
+  initials: MR
+
 - id: coordinator
   name: 小墨
   role: coordinator
   icon: 🧭
   color: "#3b82f6"
   description: 接收 boss 诉求、起草提案、协调流程
-  scope: [intake, clarifying]
+  scope: [intake]
   initials: 墨
+
+- id: designer
+  name: 小 Designer
+  role: designer
+  icon: 💡
+  color: "#f97316"
+  description: 头脑风暴 + 方案设计（ideation 阶段，在 PRD 之前）
+  scope: [ideation]
+  initials: Ds
 
 - id: pm
   name: 小 PRD
@@ -32,7 +50,7 @@
   icon: 📋
   color: "#8b5cf6"
   description: 接收 PRD 任务、生成技术预期
-  scope: [prd_pending_confirmation, tech_pending]
+  scope: [clarifying, prd_pending_confirmation]
   initials: PM
 
 - id: dev
@@ -41,7 +59,7 @@
   icon: 🛠️
   color: "#10b981"
   description: 实现功能、写代码、提交 PR
-  scope: [in_dev]
+  scope: [in_tdd_test, in_dev]
   initials: D
 
 - id: test
@@ -59,5 +77,5 @@
   icon: 👑
   color: "#ef4444"
   description: 决策者、最终验收
-  scope: [accepted, deployed, delivered]
+  scope: [accepted, needs_revision, deployed, delivered]
   initials: B
