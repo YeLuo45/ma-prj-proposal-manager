@@ -1,0 +1,63 @@
+# Hermes Profile Multi-Agent Roster
+# ----------------------------------------------------------------
+# This file declares the agents that participate in proposal
+# lifecycle work. It is read by `useAgentRoster` and used by
+# AgentRoster, AgentDashboard, and AgentHandoffTimeline.
+#
+# The schema matches the Hermes profile's `agent:` block where
+# possible, with extensions for proposal-workflow-specific fields.
+#
+# `role` determines which stage of the proposal lifecycle an
+# agent is responsible for. Set the agent matching your
+# workflow (coordinator for triage, pm for PRD, dev for impl,
+# test for acceptance, boss for oversight).
+#
+# Auto-fallback: if no roster is found at the expected path,
+# useAgentRoster reads `~/.hermes/profiles/<active>/config.yaml`
+# and uses any `agent:` block keys. If that also fails, the
+# default roster below is used.
+
+- id: coordinator
+  name: 小墨
+  role: coordinator
+  icon: 🧭
+  color: "#3b82f6"
+  description: 接收 boss 诉求、起草提案、协调流程
+  scope: [intake, clarifying]
+  initials: 墨
+
+- id: pm
+  name: 小 PRD
+  role: pm
+  icon: 📋
+  color: "#8b5cf6"
+  description: 接收 PRD 任务、生成技术预期
+  scope: [prd_pending_confirmation, tech_pending]
+  initials: PM
+
+- id: dev
+  name: 小 Dev
+  role: dev
+  icon: 🛠️
+  color: "#10b981"
+  description: 实现功能、写代码、提交 PR
+  scope: [in_dev]
+  initials: D
+
+- id: test
+  name: 小 Test
+  role: test
+  icon: 🧪
+  color: "#f59e0b"
+  description: 验收、跑测试
+  scope: [in_test_acceptance, test_failed]
+  initials: T
+
+- id: boss
+  name: Boss
+  role: boss
+  icon: 👑
+  color: "#ef4444"
+  description: 决策者、最终验收
+  scope: [accepted, deployed, delivered]
+  initials: B

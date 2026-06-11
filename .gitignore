@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.codegraph/
+.DS_Store
+*.log
+.env
+.env.local
+historical-proposals/
